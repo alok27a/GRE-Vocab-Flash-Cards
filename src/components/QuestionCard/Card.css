@@ -1,0 +1,55 @@
+.card {
+    width: 200px;
+    height: 300px;
+    perspective: 1000px;
+    cursor: pointer;
+  }
+  
+  .card-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    border-radius: 8px;
+    overflow: hidden;
+    backface-visibility: hidden;
+  }
+  
+  .front,
+  .back {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    backface-visibility: visible;
+    transform-style: preserve-3d; /* Added to preserve 3D transformations */
+  }
+  
+  .front {
+    background-color: #f0f0f0;
+    transform: rotateY(0deg);
+  }
+  
+  .back {
+    background-color: #e0e0e0;
+  }
+  
+  .back-inner {
+    transform: rotateY(180deg);
+  }
+  
+  .text {
+    /* Adjust text styling as needed */
+    text-align: center;
+  }
+  .back-inner {
+    transform: rotateY(180deg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+    
