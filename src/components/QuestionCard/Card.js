@@ -10,7 +10,7 @@ const FlipCard = ({ frontContent, backContent }) => {
     width: '200px',
     height: '300px',
     perspective: '1000px',
-    cursor: 'pointer'
+    cursor: 'pointer',
   };
 
   const flipCardStyles = {
@@ -19,7 +19,8 @@ const FlipCard = ({ frontContent, backContent }) => {
     height: '100%',
     transition: 'transform 0.8s',
     transformStyle: 'preserve-3d',
-    transform: isFlipped ? 'rotateY(180deg)' : 'none'
+    transform: isFlipped ? 'rotateY(180deg)' : 'none',
+    backgroundColor: 'khaki',
   };
 
   const cardSideStyles = {
@@ -37,27 +38,20 @@ const FlipCard = ({ frontContent, backContent }) => {
       <Box style={flipCardStyles}>
         {/* Front of the card */}
         <Box
-          style={{ 
-            ...cardSideStyles, 
-            backgroundColor: 'lightblue' // Front side color
-          }}
+          style={{ ...cardSideStyles, backgroundColor: 'blue.100' }}
         >
-          <Box style={{ position: 'absolute' }}>
-            {frontContent}
-          </Box>
+          {frontContent}
         </Box>
 
         {/* Back of the card */}
         <Box
           style={{ 
             ...cardSideStyles, 
-            backgroundColor: 'lightcoral', // Back side color
+            backgroundColor: 'orange.100', 
             transform: 'rotateY(180deg)' 
           }}
         >
-          <Box style={{ position: 'absolute' }}>
-            {backContent}
-          </Box>
+          {backContent}
         </Box>
       </Box>
     </Box>
