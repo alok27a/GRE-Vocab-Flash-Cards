@@ -1,6 +1,6 @@
 // FlipCard.jsx
 import React, { useState } from 'react';
-import { Box } from '@chakra-ui/react';
+import { Box, Button, HStack } from '@chakra-ui/react';
 
 const FlipCard = ({ frontContent, backContent }) => {
   const [isFlipped, setIsFlipped] = useState(false);
@@ -29,8 +29,20 @@ const FlipCard = ({ frontContent, backContent }) => {
     height: '100%',
     backfaceVisibility: 'hidden',
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
+    flexDirection: 'column', // Change to column layout
+    justifyContent: 'space-between', // Distribute space between content and buttons
+  };
+
+  const reviewLater = (e) => {
+    e.stopPropagation();
+    console.log("Review Later");
+    // Implement the logic or API call to mark the word for review later
+  };
+
+  const knewIt = (e) => {
+    e.stopPropagation();
+    console.log("Knew It");
+    // Implement the logic or API call to mark the word as known
   };
 
   return (
@@ -45,13 +57,23 @@ const FlipCard = ({ frontContent, backContent }) => {
 
         {/* Back of the card */}
         <Box
-          style={{ 
-            ...cardSideStyles, 
-            backgroundColor: 'orange.100', 
-            transform: 'rotateY(180deg)' 
+          style={{
+            ...cardSideStyles,
+            backgroundColor: 'orange.100',
+            transform: 'rotateY(180deg)'
           }}
         >
-          {backContent}
+          <Box style={{ padding: '10px', textAlign: 'center' }}>
+            {backContent}
+          </Box>
+          <HStack alignItems="center" align="center" m="2">
+            <Button colorScheme="teal" onClick={(e) => reviewLater(e)}>
+              Review It
+            </Button>
+            <Button colorScheme="pink" onClick={(e) => knewIt(e)}>
+              Knew It
+            </Button>
+          </HStack>
         </Box>
       </Box>
     </Box>

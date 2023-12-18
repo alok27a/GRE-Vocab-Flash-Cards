@@ -3,21 +3,21 @@ import {
   Flex,
   Avatar,
   HStack,
-  Text,
   IconButton,
   Button,
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
-  MenuDivider,
   useDisclosure,
   useColorModeValue,
   Stack,
 } from '@chakra-ui/react'
-import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons'
+import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 import ToggleTheme from '../ToggleTheme'
 import { RxReset } from "react-icons/rx";
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
+
 
 
 
@@ -25,7 +25,7 @@ interface Props {
   children: React.ReactNode
 }
 
-const Links = ['Dashboard', 'Projects', 'Team']
+const Links = ['']
 
 const NavLink = (props: Props) => {
   const { children } = props
@@ -48,6 +48,24 @@ const NavLink = (props: Props) => {
 export default function WithAction() {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
+  const navigate = useNavigate(); // Initialize useNavigate hook
+
+  const getUserData = () => {
+    const userData = localStorage.getItem('user');
+    return userData ? JSON.parse(userData) : null;
+  }
+
+  const user = getUserData();
+
+  // Logout function
+  const logout = () => {
+    localStorage.removeItem('user'); // Remove user data from local storage
+    navigate('/'); // Redirect to login page or home page
+  }
+
+
+
+
   return (
     <>
       <Box bg={useColorModeValue('gray.50', 'gray.900')} px={4}>
@@ -60,7 +78,7 @@ export default function WithAction() {
             onClick={isOpen ? onClose : onOpen}
           />
           <HStack spacing={8} alignItems={'center'}>
-            <ToggleTheme/>
+            <ToggleTheme />
             <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
               {Links.map((link) => (
                 <NavLink key={link}>{link}</NavLink>
@@ -73,30 +91,21 @@ export default function WithAction() {
               colorScheme={'teal'}
               size={'md'}
               mr={4}
-              leftIcon={<RxReset /> }>
+              leftIcon={<RxReset />}>
               Reset Progress
             </Button>
             <Menu>
-              <MenuButton
-                as={Button}
-                rounded={'full'}
-                variant={'link'}
-                cursor={'pointer'}
-                minW={0}>
+              <MenuButton as={Button} rounded={'full'} variant={'link'} cursor={'pointer'} minW={0}>
                 <Avatar
                   size={'md'}
-                  src={
-                    'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
-                  }
+                  src={user ? user.userImageUrl : 'path_to_default_avatar_image'}
                 />
               </MenuButton>
               <MenuList>
-                <MenuItem>Link 1</MenuItem>
-                <MenuItem>Link 2</MenuItem>
-                <MenuDivider />
-                <MenuItem>Link 3</MenuItem>
+                <MenuItem onClick={logout}>Log Out</MenuItem>
               </MenuList>
             </Menu>
+
           </Flex>
         </Flex>
 

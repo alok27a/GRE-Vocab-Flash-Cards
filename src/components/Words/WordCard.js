@@ -20,9 +20,22 @@ const WordCard = () => {
       <Text fontSize='2xl' fontWeight='bold' textAlign='center' mb={6}>
         Select Wordlist
       </Text>
-      <Flex direction="row" justify="center" align="center" wrap="wrap">
+      <Flex
+        direction={{ base: 'column', md: 'row' }}
+        justify="center"
+        align={{ base: 'center', md: 'center' }}
+        wrap="wrap"
+      >
+
         {/* Selecting type of word list */}
         <Select placeholder='Select option' borderRadius='md' flex="1" minW="150px" m={2} >
+          <option value='option1'>Option 1</option>
+          <option value='option2'>Option 2</option>
+          <option value='option3'>Option 3</option>
+        </Select>
+
+        {/* Selecting words like learned, review, and all */}
+        <Select placeholder='Select option' borderRadius='md' flex="1" minW="150px" m={2}>
           <option value='option1'>Option 1</option>
           <option value='option2'>Option 2</option>
           <option value='option3'>Option 3</option>

@@ -27,6 +27,14 @@ export default function CallToActionWithAnnotation() {
 
                 console.log(res);
 
+                // Save user data in local storage
+                localStorage.setItem('user', JSON.stringify({
+                    fullName: res.data.name,
+                    emailId: res.data.email,
+                    googleId: res.data.id,
+                    userImageUrl: res.data.picture,
+                }));
+
                 // Redirect to "/words" after successful login
                 navigate('/words');
             } catch (err) {
