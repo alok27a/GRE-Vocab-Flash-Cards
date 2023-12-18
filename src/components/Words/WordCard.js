@@ -15,10 +15,18 @@ const WordCard = () => {
     // Functionality for previous button
   };
 
+  const getUserData = () => {
+    const userData = localStorage.getItem('user');
+    return userData ? JSON.parse(userData) : null;
+  }
+
+  const user = getUserData();
+  
+
   return (
     <Box bg={bg} color={color} p={5} borderRadius="lg">
-      <Text fontSize='2xl' fontWeight='bold' textAlign='center' mb={6}>
-        Select Wordlist
+      <Text fontSize='2xl' fontWeight='bold' textAlign='start' m={4}>
+        Hi {user.fullName}, Select a Wordlist
       </Text>
       <Flex
         direction={{ base: 'column', md: 'row' }}
@@ -29,27 +37,28 @@ const WordCard = () => {
 
         {/* Selecting type of word list */}
         <Select placeholder='Select option' borderRadius='md' flex="1" minW="150px" m={2} >
-          <option value='option1'>Option 1</option>
-          <option value='option2'>Option 2</option>
-          <option value='option3'>Option 3</option>
+          <option value='GregMat'>GregMat</option>
+          <option value='Magoosh'>Magoosh</option>
+          <option value='Barrons'>Barron's 333</option>
         </Select>
 
         {/* Selecting words like learned, review, and all */}
         <Select placeholder='Select option' borderRadius='md' flex="1" minW="150px" m={2}>
-          <option value='option1'>Option 1</option>
-          <option value='option2'>Option 2</option>
-          <option value='option3'>Option 3</option>
+          <option value='option1'>View All Words</option>
+          <option value='option2'>Review Later Only</option>
+          <option value='option3'>Already Knew Only</option>
+          <option value='option3'>Remaining Words</option>
         </Select>
 
         {/* Selecting words like learned, review, and all */}
-        <Select placeholder='Select option' borderRadius='md' flex="1" minW="150px" m={2}>
+        {/* <Select placeholder='Select option' borderRadius='md' flex="1" minW="150px" m={2}>
           <option value='option1'>Option 1</option>
           <option value='option2'>Option 2</option>
           <option value='option3'>Option 3</option>
-        </Select>
+        </Select> */}
 
         {/* Submit Button with Icon */}
-        <Button colorScheme='teal' size='md' leftIcon={<FaCheck />}>
+        <Button bg="green.400" size='md' leftIcon={<FaCheck />}>
           Submit
         </Button>
       </Flex>
@@ -61,14 +70,14 @@ const WordCard = () => {
           backContent={<div>Back</div>}
         />
 
-        <HStack>
+        <HStack mt={4}>
           {/* Previous Button with Icon */}
           <Button onClick={handlePrevious} leftIcon={<FaArrowLeft />}>
             Previous
           </Button>
 
           {/* Next Button with Icon */}
-          <Button onClick={handleNext} rightIcon={<FaArrowRight />}>
+          <Button bg="blue.100" onClick={handleNext} rightIcon={<FaArrowRight />}>
             Next
           </Button>
         </HStack>

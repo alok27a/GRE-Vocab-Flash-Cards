@@ -1,16 +1,18 @@
 // FlipCard.jsx
 import React, { useState } from 'react';
-import { Box, Button, HStack } from '@chakra-ui/react';
+import { Box, Button, HStack, useColorMode } from '@chakra-ui/react';
 
 const FlipCard = ({ frontContent, backContent }) => {
   const [isFlipped, setIsFlipped] = useState(false);
+  const { colorMode } = useColorMode();
 
   const containerStyles = {
     position: 'relative',
-    width: '200px',
+    width: '600px',
     height: '300px',
     perspective: '1000px',
     cursor: 'pointer',
+ 
   };
 
   const flipCardStyles = {
@@ -20,7 +22,8 @@ const FlipCard = ({ frontContent, backContent }) => {
     transition: 'transform 0.8s',
     transformStyle: 'preserve-3d',
     transform: isFlipped ? 'rotateY(180deg)' : 'none',
-    backgroundColor: 'khaki',
+    backgroundColor: colorMode === 'light' ? '#EDF2F7' : 'gray.600',
+    borderRadius: '10px',
   };
 
   const cardSideStyles = {
@@ -29,20 +32,18 @@ const FlipCard = ({ frontContent, backContent }) => {
     height: '100%',
     backfaceVisibility: 'hidden',
     display: 'flex',
-    flexDirection: 'column', // Change to column layout
-    justifyContent: 'space-between', // Distribute space between content and buttons
+    flexDirection: 'column',
+    justifyContent: 'space-between',
   };
 
   const reviewLater = (e) => {
     e.stopPropagation();
     console.log("Review Later");
-    // Implement the logic or API call to mark the word for review later
   };
 
   const knewIt = (e) => {
     e.stopPropagation();
     console.log("Knew It");
-    // Implement the logic or API call to mark the word as known
   };
 
   return (
@@ -50,7 +51,10 @@ const FlipCard = ({ frontContent, backContent }) => {
       <Box style={flipCardStyles}>
         {/* Front of the card */}
         <Box
-          style={{ ...cardSideStyles, backgroundColor: 'blue.100' }}
+          style={{
+            ...cardSideStyles,
+            backgroundColor: colorMode === 'light' ? 'cyan.400' : 'cyan.600' // Vibrant cyan for front
+          }}
         >
           {frontContent}
         </Box>
@@ -59,7 +63,7 @@ const FlipCard = ({ frontContent, backContent }) => {
         <Box
           style={{
             ...cardSideStyles,
-            backgroundColor: 'orange.100',
+            backgroundColor: colorMode === 'light' ? 'orange.400' : 'orange.600', // Warm orange for back
             transform: 'rotateY(180deg)'
           }}
         >
@@ -67,10 +71,12 @@ const FlipCard = ({ frontContent, backContent }) => {
             {backContent}
           </Box>
           <HStack alignItems="center" align="center" m="2">
-            <Button colorScheme="teal" onClick={(e) => reviewLater(e)}>
+            <Button bg="pink.100" onClick={(e) => reviewLater(e)}>
               Review It
             </Button>
-            <Button colorScheme="pink" onClick={(e) => knewIt(e)}>
+
+
+            <Button  bg="green.400" onClick={(e) => knewIt(e)}>
               Knew It
             </Button>
           </HStack>

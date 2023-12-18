@@ -88,7 +88,7 @@ export default function WithAction() {
           <Flex alignItems={'center'}>
             <Button
               variant={'solid'}
-              colorScheme={'teal'}
+              bg={'red.400'}
               size={'md'}
               mr={4}
               leftIcon={<RxReset />}>
