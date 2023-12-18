@@ -1,5 +1,5 @@
 import React from 'react';
-import { Select, Button, Text, Flex, Box, VStack, useColorModeValue, HStack } from '@chakra-ui/react';
+import { Select, Button, Text, Flex, Box, Spacer, VStack, useColorModeValue, HStack } from '@chakra-ui/react';
 import FlipCard from '../QuestionCard/Card';
 import { FaArrowLeft, FaArrowRight, FaCheck } from 'react-icons/fa'; // Importing icons
 
@@ -21,7 +21,7 @@ const WordCard = () => {
   }
 
   const user = getUserData();
-  
+
 
   return (
     <Box bg={bg} color={color} p={5} borderRadius="lg">
@@ -33,6 +33,7 @@ const WordCard = () => {
         justify="center"
         align={{ base: 'center', md: 'center' }}
         wrap="wrap"
+        m={4}
       >
 
         {/* Selecting type of word list */}
@@ -70,7 +71,7 @@ const WordCard = () => {
           backContent={<div>Back</div>}
         />
 
-        <HStack mt={4}>
+        <Flex mt={4} width="100%" justifyContent="space-around">
           {/* Previous Button with Icon */}
           <Button onClick={handlePrevious} leftIcon={<FaArrowLeft />}>
             Previous
@@ -80,7 +81,7 @@ const WordCard = () => {
           <Button bg="blue.100" onClick={handleNext} rightIcon={<FaArrowRight />}>
             Next
           </Button>
-        </HStack>
+        </Flex>
       </VStack>
     </Box>
   );
