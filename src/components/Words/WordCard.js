@@ -76,11 +76,31 @@ const WordCard = () => {
   };
 
   const handleNext = () => {
-    setCurrentIndex(prevIndex => (prevIndex + 1) % words.length); // Loop back to the first word after the last
+    if (currentIndex < words.length - 1) {
+      setCurrentIndex(prevIndex => prevIndex + 1);
+    } else {
+      toast({
+        title: 'End of List',
+        description: 'You have reached the end of the word list.',
+        status: 'info',
+        duration: 3000,
+        isClosable: true,
+      });
+    }
   };
 
   const handlePrevious = () => {
-    setCurrentIndex(prevIndex => (prevIndex - 1 + words.length) % words.length); // Loop back to the last word if at the first
+    if (currentIndex > 0) {
+      setCurrentIndex(prevIndex => prevIndex - 1);
+    } else {
+      toast({
+        title: 'Start of List',
+        description: 'You are at the beginning of the word list.',
+        status: 'info',
+        duration: 3000,
+        isClosable: true,
+      });
+    }
   };
 
 
@@ -153,6 +173,8 @@ const WordCard = () => {
   };
 
 
+  const disabledBtnBg = useColorModeValue('gray.200', 'gray.600'); // Adjust colors for light/dark mode
+  const disabledBtnColor = useColorModeValue('gray.400', 'gray.800');
 
 
   return (
@@ -213,15 +235,25 @@ const WordCard = () => {
 
 
             <Flex mt={4} width="100%" justifyContent="space-around">
-              {/* Previous Button with Icon */}
-              <Button onClick={handlePrevious} leftIcon={<FaArrowLeft />}>
+
+              <Button
+                onClick={handlePrevious}
+                leftIcon={<FaArrowLeft />}
+                disabled={currentIndex === 0}
+                _disabled={{ bg: disabledBtnBg, color: disabledBtnColor }}
+              >
                 Previous
               </Button>
-
-              {/* Next Button with Icon */}
-              <Button bg="blue.100" onClick={handleNext} color={"black"} rightIcon={<FaArrowRight />}>
+              <Button
+                onClick={handleNext}
+                rightIcon={<FaArrowRight />}
+                disabled={currentIndex === words.length - 1}
+                _disabled={{ bg: disabledBtnBg, color: disabledBtnColor }}
+              >
                 Next
               </Button>
+
+
             </Flex>
           </>
         ) : <Text fontSize='2xl' fontWeight='bold' textAlign='center' m={4}>No words to display</Text>}
