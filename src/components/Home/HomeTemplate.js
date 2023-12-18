@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {
@@ -8,16 +9,21 @@ import {
     Button,
     Stack,
     Icon,
-    useColorModeValue,
     createIcon,
+    useToast
 } from '@chakra-ui/react';
 import { useGoogleLogin } from '@react-oauth/google';
+import { Spinner } from '@chakra-ui/react';
 
 export default function CallToActionWithAnnotation() {
     const navigate = useNavigate(); // Initialize useNavigate hook
+    const [isLoading, setIsLoading] = useState(false);
+    const toast = useToast();
 
     const login = useGoogleLogin({
+
         onSuccess: async (response) => {
+            setIsLoading(true);
             try {
                 const res = await axios.get('https://www.googleapis.com/oauth2/v2/userinfo', {
                     headers: {
@@ -40,7 +46,7 @@ export default function CallToActionWithAnnotation() {
 
                 // Save other user data in local storage
 
-                console.log("testing ",createUserResponse)
+                console.log("testing ", createUserResponse)
 
 
                 localStorage.setItem('user', JSON.stringify({
@@ -56,71 +62,97 @@ export default function CallToActionWithAnnotation() {
 
             } catch (err) {
                 console.log(err);
+                toast({
+                    title: "Error logging in",
+                    description: "Please try again later",
+                    status: "error",
+                    duration: 9000,
+                    isClosable: true,
+                })
+            } finally {
+                setIsLoading(false); // Stop loading regardless of the outcome
             }
+
         },
     });
 
     return (
         <>
-            <Container maxW={'3xl'}>
-                <Stack
-                    as={Box}
-                    textAlign={'center'}
-                    spacing={{ base: 8, md: 14 }}
-                    py={{ base: 20, md: 36 }}>
-                    <Heading
-                        fontWeight={600}
-                        fontSize={{ base: '2xl', sm: '4xl', md: '6xl' }}
-                        lineHeight={'110%'}>
-                        GRE Flashcards <br />
-                        <Text as={'span'} color={'green.400'}>
-                            Ace Vocabulary Fast!
-                        </Text>
-                    </Heading>
-                    <Text color={'gray.500'}>
-                        Unlock GRE success with our comprehensive flash card website, featuring handpicked words from GRE gurus like Gregmat, Magoosh, and Barrons - your ultimate one-stop destination for mastering vocabulary.
+            {isLoading ? (
+                <Box textAlign="center" alignContent={"center"} alignItems={"center"} py={10}>
+                    <Spinner
+                        thickness="4px"
+                        speed="0.65s"
+                        emptyColor="gray.200"
+                        color="blue.500"
+                        size="xl"
+                    />
+                    <Text fontSize="xl" fontWeight="bold" mt={5}>
+                        Logging in...
                     </Text>
-                    <Stack
-                        direction={'column'}
-                        spacing={3}
-                        align={'center'}
-                        alignSelf={'center'}
-                        position={'relative'}>
-                        <Button
-                            colorScheme={'green'}
-                            bg={'green.400'}
-                            rounded={'full'}
-                            px={6}
-                            _hover={{
-                                bg: 'green.500',
-                            }}
-                            onClick={login}
-                        >
-                            Get Started
-                        </Button>
+                </Box>
+            ) : (
 
-                        <Box>
-                            <Icon
-                                as={Arrow}
-                                color={useColorModeValue('gray.800', 'gray.300')}
-                                w={71}
-                                position={'absolute'}
-                                right={-71}
-                                top={'10px'}
-                            />
-                            <Text
-                                fontSize={'lg'}
-                                fontFamily={'Caveat'}
-                                position={'absolute'}
-                                right={'-125px'}
-                                top={'-15px'}
-                                transform={'rotate(10deg)'}>
-                                Completely free!
+                <Container maxW={'3xl'}>
+                    <Stack
+                        as={Box}
+                        textAlign={'center'}
+                        spacing={{ base: 8, md: 14 }}
+                        py={{ base: 20, md: 36 }}>
+                        <Heading
+                            fontWeight={600}
+                            fontSize={{ base: '2xl', sm: '4xl', md: '6xl' }}
+                            lineHeight={'110%'}>
+                            GRE Flashcards <br />
+                            <Text as={'span'} color={'green.400'}>
+                                Ace Vocabulary Fast!
                             </Text>
-                        </Box>
+                        </Heading>
+                        <Text color={'gray.500'}>
+                            Unlock GRE success with our comprehensive flash card website, featuring handpicked words from GRE gurus like Gregmat, Magoosh, and Barrons - your ultimate one-stop destination for mastering vocabulary.
+                        </Text>
+                        <Stack
+                            direction={'column'}
+                            spacing={3}
+                            align={'center'}
+                            alignSelf={'center'}
+                            position={'relative'}>
+                            <Button
+                                colorScheme={'green'}
+                                bg={'green.400'}
+                                rounded={'full'}
+                                px={6}
+                                _hover={{
+                                    bg: 'green.500',
+                                }}
+                                onClick={login}
+                            >
+                                Get Started
+                            </Button>
+
+                            <Box>
+                                <Icon
+                                    as={Arrow}
+                                    // color={useColorModeValue('gray.800', 'gray.300')}
+                                    w={71}
+                                    position={'absolute'}
+                                    right={-71}
+                                    top={'10px'}
+                                />
+                                <Text
+                                    fontSize={'lg'}
+                                    fontFamily={'Caveat'}
+                                    position={'absolute'}
+                                    right={'-125px'}
+                                    top={'-15px'}
+                                    transform={'rotate(10deg)'}>
+                                    Completely free!
+                                </Text>
+                            </Box>
+                        </Stack>
                     </Stack>
-                </Stack>
-            </Container>
+                </Container>)}
+
         </>
     )
 }
