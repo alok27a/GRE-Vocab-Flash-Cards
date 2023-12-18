@@ -1,19 +1,88 @@
-import React from 'react';
-import { Select, Button, Text, Flex, Box, Spacer, VStack, useColorModeValue, HStack } from '@chakra-ui/react';
+import React, { useState } from 'react';
+import { Select, Button, Text, Flex, Box, VStack, useColorModeValue } from '@chakra-ui/react';
 import FlipCard from '../QuestionCard/Card';
 import { FaArrowLeft, FaArrowRight, FaCheck } from 'react-icons/fa'; // Importing icons
+import { useToast } from '@chakra-ui/react'
+import { Skeleton } from '@chakra-ui/react';
+
 
 const WordCard = () => {
   const bg = useColorModeValue('white', 'gray.800'); // Adjusts background color
   const color = useColorModeValue('gray.800', 'white'); // Adjusts text color
 
+  const [wordListType, setWordListType] = useState('');
+  const [option, setOption] = useState('');
+
+  const [words, setWords] = useState([]); // State to store the fetched words
+  const [currentIndex, setCurrentIndex] = useState(0); // State to keep track of the current word
+
+
+  const toast = useToast()
+  const [isLoading, setIsLoading] = useState(false);
+
+
+  const categorySelection = async () => {
+    try {
+      setIsLoading(true); // Start loading
+
+      const user = getUserData();
+      console.log(user)
+
+      if (!user || !user.token || !wordListType || !option) {
+        console.error('User data, word list type, or option is missing');
+        return;
+      }
+
+      console.log("hello ", user.userId)
+      const response = await fetch(`https://gre-vocab-flash-cards-backend.vercel.app/userprogress/words/${user.userId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          // Include the auth token if needed
+          'Authorization': `Bearer ${user.token}`, // Assuming the token is stored in user data
+        },
+        body: JSON.stringify({ "category": wordListType, "option": option }) // Include the body if using 'POST'
+      });
+
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setWords(data.data); // Assuming the fetched words are in data.data
+      setCurrentIndex(0); // Reset to the first word
+      toast({
+        title: "Words fetched successfully",
+        description: "Words fetched successfully",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      })
+
+    } catch (error) {
+      console.error('Error fetching words:', error);
+      toast({
+        title: "Error fetching words",
+        description: "Error fetching words",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      })
+    }
+
+    setIsLoading(false); // Stop loading once the API call is complete
+
+  };
+
   const handleNext = () => {
-    // Functionality for next button
+    setCurrentIndex(prevIndex => (prevIndex + 1) % words.length); // Loop back to the first word after the last
   };
 
   const handlePrevious = () => {
-    // Functionality for previous button
+    setCurrentIndex(prevIndex => (prevIndex - 1 + words.length) % words.length); // Loop back to the last word if at the first
   };
+
 
   const getUserData = () => {
     const userData = localStorage.getItem('user');
@@ -21,6 +90,69 @@ const WordCard = () => {
   }
 
   const user = getUserData();
+
+
+
+  const handleReviewLater = async () => {
+    const wordId = words[currentIndex]._id; // Assuming each word object has an _id field
+    try {
+      await fetch(`https://gre-vocab-flash-cards-backend.vercel.app/userprogress/markreviewlater/${wordId}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${user.token}`
+        }
+      });
+      console.log("Marked for review later:", wordId);
+      toast({
+        title: "Marked for review later",
+        description: "Marked for review later",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      })
+    } catch (error) {
+      console.error('Error marking word for review later:', error);
+      toast({
+        title: "Error marking word for review later",
+        description: "Error marking word for review later",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      })
+    }
+  };
+
+  const handleKnewThisWord = async () => {
+    const wordId = words[currentIndex]._id;
+    try {
+      await fetch(`https://gre-vocab-flash-cards-backend.vercel.app/userprogress/markknewthisword/${wordId}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${user.token}`
+        }
+      });
+      console.log("Marked as knew this word:", wordId);
+
+      toast({
+        title: "Marked as knew this word",
+        description: "Marked as knew this word",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      })
+    } catch (error) {
+      console.error('Error marking word as known:', error);
+      toast({
+        title: "Error marking word as known",
+        description: "Error marking word as known",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      })
+    }
+  };
+
+
 
 
   return (
@@ -37,51 +169,62 @@ const WordCard = () => {
       >
 
         {/* Selecting type of word list */}
-        <Select placeholder='Select option' borderRadius='md' flex="1" minW="150px" m={2} >
+        <Select placeholder='Select Type of List' borderRadius='md' flex="1" minW="150px" m={2}
+          onChange={e => setWordListType(e.target.value)}>
           <option value='GregMat'>GregMat</option>
           <option value='Magoosh'>Magoosh</option>
-          <option value='Barrons'>Barron's 333</option>
+          <option value="Barron's 333">Barron's 333</option>
+          <option value='all'>All of the above</option>
         </Select>
 
         {/* Selecting words like learned, review, and all */}
-        <Select placeholder='Select option' borderRadius='md' flex="1" minW="150px" m={2}>
-          <option value='option1'>View All Words</option>
-          <option value='option2'>Review Later Only</option>
-          <option value='option3'>Already Knew Only</option>
-          <option value='option3'>Remaining Words</option>
+        <Select placeholder='Select Option' borderRadius='md' flex="1" minW="150px" m={2}
+          onChange={e => setOption(e.target.value)}
+        >
+          <option value='all'>View All Words</option>
+          <option value='reviewLater'>Review Later Only</option>
+          <option value='knewThisWord'>Completed Only</option>
+          <option value='notMarked'>Remaining Words</option>
         </Select>
-
-        {/* Selecting words like learned, review, and all */}
-        {/* <Select placeholder='Select option' borderRadius='md' flex="1" minW="150px" m={2}>
-          <option value='option1'>Option 1</option>
-          <option value='option2'>Option 2</option>
-          <option value='option3'>Option 3</option>
-        </Select> */}
 
         {/* Submit Button with Icon */}
-        <Button bg="green.400" size='md' leftIcon={<FaCheck />}>
+        <Button bg="green.400" size='md' leftIcon={<FaCheck />} onClick={categorySelection}>
           Submit
         </Button>
       </Flex>
 
       <VStack spacing={4} mt={5}>
-        {/* FlipCard Component */}
-        <FlipCard
-          frontContent={<div>Front</div>}
-          backContent={<div>Back</div>}
-        />
+        {isLoading ? (
+          <Skeleton height="300px" width="600px" />
+        ) : words.length > 0 ? (
+          <>
+            <FlipCard
+              frontContent={<div>{words[currentIndex].word}</div>} // Display the current word
+              backContent={
+                <Box display={"flex"} flexDirection={"column"} justifyContent="space-around" alignItems={'center'} >
+                  <Box mb={2}>Meaning: {words[currentIndex].meaning}</Box>
+                  <Box>Synonyms: {words[currentIndex].synonyms}</Box>
+                </Box>
+              }
+              onReviewLater={handleReviewLater}
+              onKnewIt={handleKnewThisWord}
+            />
 
-        <Flex mt={4} width="100%" justifyContent="space-around">
-          {/* Previous Button with Icon */}
-          <Button onClick={handlePrevious} leftIcon={<FaArrowLeft />}>
-            Previous
-          </Button>
 
-          {/* Next Button with Icon */}
-          <Button bg="blue.100" onClick={handleNext} rightIcon={<FaArrowRight />}>
-            Next
-          </Button>
-        </Flex>
+
+            <Flex mt={4} width="100%" justifyContent="space-around">
+              {/* Previous Button with Icon */}
+              <Button onClick={handlePrevious} leftIcon={<FaArrowLeft />}>
+                Previous
+              </Button>
+
+              {/* Next Button with Icon */}
+              <Button bg="blue.100" onClick={handleNext} color={"black"} rightIcon={<FaArrowRight />}>
+                Next
+              </Button>
+            </Flex>
+          </>
+        ) : <Text fontSize='2xl' fontWeight='bold' textAlign='center' m={4}>No words to display</Text>}
       </VStack>
     </Box>
   );

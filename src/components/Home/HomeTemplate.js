@@ -25,18 +25,35 @@ export default function CallToActionWithAnnotation() {
                     }
                 });
 
-                console.log(res);
+                console.log(res.data);
 
-                // Save user data in local storage
+                // Construct the user data from the Google API response
+                const userData = {
+                    "name": res.data.name,
+                    "email": res.data.email,
+                    "googleId": res.data.id, // Make sure the ID is correct; it might be 'sub' instead of 'id'
+                    "imageUrl": res.data.picture,
+                };
+
+                // Make a POST request to your createUser endpoint
+                const createUserResponse = await axios.post('https://gre-vocab-flash-cards-backend.vercel.app/users/createUser', userData);
+
+                // Save other user data in local storage
+
+                console.log("testing ",createUserResponse)
+
+
                 localStorage.setItem('user', JSON.stringify({
-                    fullName: res.data.name,
-                    emailId: res.data.email,
-                    googleId: res.data.id,
-                    userImageUrl: res.data.picture,
+                    userId: createUserResponse.data.data._id,
+                    fullName: userData.name,
+                    emailId: userData.email,
+                    googleId: userData.googleId,
+                    userImageUrl: userData.imageUrl,
+                    token: createUserResponse.data.token
                 }));
 
-                // Redirect to "/words" after successful login
                 navigate('/words');
+
             } catch (err) {
                 console.log(err);
             }

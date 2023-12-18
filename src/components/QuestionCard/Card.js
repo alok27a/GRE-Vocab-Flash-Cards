@@ -3,26 +3,17 @@ import { Box, Button, HStack, useColorMode } from '@chakra-ui/react';
 import '@fontsource/mali';
 import '@fontsource/poppins';
 
-
-const FlipCard = ({ frontContent, backContent }) => {
+const FlipCard = ({ frontContent, backContent, onReviewLater, onKnewIt }) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const { colorMode } = useColorMode();
 
-  const reviewLater = (e) => {
-    e.stopPropagation(); // Prevents the flip action when clicking the button
-    console.log("Review Later");
-  };
 
-  const knewIt = (e) => {
-    e.stopPropagation(); // Prevents the flip action when clicking the button
-    console.log("Knew It");
-  };
 
   return (
     <Box
       position="relative"
-      width={['100%', '450px', '600px']}
-      height={['150px', '225px', '300px']}
+      width={['90%', '450px', '600px']} // Use a percentage width for smaller screens
+      height={['300px', '225px', '300px']} // Adjust the height for smaller screens
       perspective="1000px"
       cursor="pointer"
       margin="0 auto"
@@ -35,8 +26,6 @@ const FlipCard = ({ frontContent, backContent }) => {
         transition="transform 0.8s"
         transformStyle="preserve-3d"
         transform={isFlipped ? 'rotateY(180deg)' : 'none'}
-        alignContent={'center'}
-        alignItems={'center'}
       >
         {/* Front of the card */}
         <Box
@@ -46,13 +35,12 @@ const FlipCard = ({ frontContent, backContent }) => {
           backfaceVisibility="hidden"
           display="flex"
           flexDirection="column"
-          bg={colorMode === 'light' ? '#FED7D7': '#34495E'}
+          bg={colorMode === 'light' ? '#E2E8F0': '#34495E'}
           borderRadius="10px"
-          transform={isFlipped ? 'rotateY(180deg)' : 'none'} // Reset transform when not flipped
-          zIndex="2" // Ensure this is always on top when not flipped
+          transform={isFlipped ? 'rotateY(180deg)' : 'none'}
+          zIndex="2"
           fontFamily={'Mali'}
-          // fontWeight={'bold'}
-          fontSize={'6xl'}
+          fontSize={['2xl', '4xl', '6xl']} // Adjust font size for different screen sizes
           alignItems={'center'} 
           justifyContent={'center'}
         >
@@ -69,20 +57,20 @@ const FlipCard = ({ frontContent, backContent }) => {
           flexDirection="column"
           justifyContent={'space-between'}
           bg={colorMode === 'light' ? '#ECF0F1' : '#2C3E50'}
-          transform="rotateY(180deg)" // This rotation is key for the flip effect
+          transform="rotateY(180deg)"
           borderRadius="10px"
-          zIndex={isFlipped ? '2' : '1'} // Ensure this comes to top when flipped
-          
+          zIndex={isFlipped ? '2' : '1'}
+          fontSize={['md', 'lg', 'xl']} // Adjust font size for different screen sizes
         >
-          <Box p="10px" textAlign="center" fontFamily={'Poppins'} fontSize={'xl'}>
+          <Box p="10px" textAlign="center" fontFamily={'Poppins'}>
             {backContent}
           </Box>
           <HStack alignItems="center" justify="center" m="2">
-            <Button bg="pink.100" onClick={reviewLater}>
+            <Button bg="pink.100" color={"black"} onClick={onReviewLater}>
               Review It
             </Button>
-            <Button bg="green.400" onClick={knewIt}>
-              Knew It
+            <Button bg="green.400"  color={"black"} onClick={onKnewIt}>
+              Completed
             </Button>
           </HStack>
         </Box>
