@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './pages/App';
 import Questions from './pages/Questions';
+import Progress from './pages/Progress';
 import theme from './config/theme';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
     {
         path: '/words',
         element: <Questions />,
+    },
+    {
+        path: '/progress',
+        element: <Progress />,
     },
 ]);
 

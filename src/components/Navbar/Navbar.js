@@ -12,23 +12,17 @@ import {
   useDisclosure,
   useColorModeValue,
   Stack,
-} from '@chakra-ui/react'
-import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
-import ToggleTheme from '../ToggleTheme'
+} from '@chakra-ui/react';
+import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
+import ToggleTheme from '../ToggleTheme';
 import { RxReset } from "react-icons/rx";
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
+const Links = [{ name: 'Dashboard', url: '/words' }, { name: 'Progress', url: '/progress' }]; // Update with URL
 
+const NavLink = ({ name, url }) => {
+  const navigate = useNavigate(); // Use useNavigate hook
 
-
-interface Props {
-  children: React.ReactNode
-}
-
-const Links = ['']
-
-const NavLink = (props: Props) => {
-  const { children } = props
   return (
     <Box
       as="a"
@@ -39,21 +33,22 @@ const NavLink = (props: Props) => {
         textDecoration: 'none',
         bg: useColorModeValue('gray.200', 'gray.700'),
       }}
-      href={'#'}>
-      {children}
+      onClick={() => navigate(url)} // Navigate on click
+      cursor="pointer"
+    >
+      {name}
     </Box>
-  )
-}
+  );
+};
 
 export default function WithAction() {
-  const { isOpen, onOpen, onClose } = useDisclosure()
-
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate(); // Initialize useNavigate hook
 
   const getUserData = () => {
     const userData = localStorage.getItem('user');
     return userData ? JSON.parse(userData) : null;
-  }
+  };
 
   const user = getUserData();
 
@@ -61,10 +56,7 @@ export default function WithAction() {
   const logout = () => {
     localStorage.removeItem('user'); // Remove user data from local storage
     navigate('/'); // Redirect to login page or home page
-  }
-
-
-
+  };
 
   return (
     <>
@@ -81,9 +73,10 @@ export default function WithAction() {
             <ToggleTheme />
             <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
               {Links.map((link) => (
-                <NavLink key={link} >{link}</NavLink>
+                <NavLink key={link.name} name={link.name} url={link.url} />
               ))}
             </HStack>
+
           </HStack>
           <Flex alignItems={'center'}>
             <Button
@@ -113,12 +106,12 @@ export default function WithAction() {
           <Box pb={4} display={{ md: 'none' }}>
             <Stack as={'nav'} spacing={4}>
               {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
+                <NavLink key={link.name} name={link.name} url={link.url} />
               ))}
             </Stack>
           </Box>
         ) : null}
       </Box>
     </>
-  )
+  );
 }
