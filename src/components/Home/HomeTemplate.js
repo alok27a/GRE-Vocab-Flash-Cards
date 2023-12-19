@@ -31,8 +31,7 @@ export default function CallToActionWithAnnotation() {
                     }
                 });
 
-                console.log(res.data);
-
+         
                 // Construct the user data from the Google API response
                 const userData = {
                     "name": res.data.name,
@@ -46,7 +45,7 @@ export default function CallToActionWithAnnotation() {
 
                 // Save other user data in local storage
 
-                console.log("testing ", createUserResponse)
+            
 
 
                 localStorage.setItem('user', JSON.stringify({
@@ -61,7 +60,7 @@ export default function CallToActionWithAnnotation() {
                 navigate('/words');
 
             } catch (err) {
-                console.log(err);
+      
                 toast({
                     title: "Error logging in",
                     description: "Please try again later",

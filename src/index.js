@@ -27,8 +27,10 @@ const router = createBrowserRouter([
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
-    <GoogleOAuthProvider clientId="72963528371-8o87cqmkaug3d5vmog8c3jjlhlnuofu0.apps.googleusercontent.com">
+
+    <GoogleOAuthProvider clientId={process.env.REACT_APP_CLIENT_ID}>
         <React.StrictMode>
             <ChakraProvider theme={theme}>
                 <RouterProvider router={router} />

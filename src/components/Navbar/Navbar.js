@@ -101,7 +101,7 @@ export default function WithAction() {
     } catch (error) {
       console.error('Error resetting progress:', error);
       const errorResponse = await error.response.json(); // Get the error response body
-      console.log('Error details:', errorResponse);
+    
       toast({
         title: "Error resetting progress",
         description: errorResponse.message || "Error resetting progress",

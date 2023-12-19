@@ -37,14 +37,13 @@ const WordCard = () => {
       setIsLoading(true); // Start loading
 
       const user = getUserData();
-      console.log(user)
+   
 
       if (!user || !user.token || !wordListType || !option) {
         console.error('User data, word list type, or option is missing');
         return;
       }
 
-      console.log("hello ", user.userId)
       const response = await fetch(`https://gre-vocab-flash-cards-backend.vercel.app/userprogress/words/${user.userId}`, {
         method: 'POST',
         headers: {
@@ -133,7 +132,7 @@ const WordCard = () => {
           'Authorization': `Bearer ${user.token}`
         }
       });
-      console.log("Marked for review later:", wordId);
+
       toast({
         title: "Marked for review later",
         description: "Marked for review later",
@@ -162,8 +161,7 @@ const WordCard = () => {
           'Authorization': `Bearer ${user.token}`
         }
       });
-      console.log("Marked as knew this word:", wordId);
-
+  
       toast({
         title: "Marked as knew this word",
         description: "Marked as knew this word",
