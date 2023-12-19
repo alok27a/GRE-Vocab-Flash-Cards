@@ -5,7 +5,7 @@ Welcome to **GRE Flashcards**, your ultimate one-stop destination for mastering 
 ## Features
 
 - **Extensive Vocabulary List**: Access a wide range of words that are frequently encountered in the GRE.
-- **Expert Selection**: Each word is carefully selected by GRE gurus to ensure you study what matters the most.
+- **Expert Selection**: Each word is carefully selected by GRE gurus like Gregmat, Magoosh, and Barrons to ensure you study what matters the most.
 - **User-Friendly Interface**: Navigate easily through our intuitive website to make your learning process smooth and efficient.
 - **Progress Tracking**: Keep track of the words you've mastered and identify areas that need more attention.
 
@@ -18,12 +18,21 @@ To start using GRE Flashcards, follow these simple steps:
 3. **Begin Learning**: Start your vocabulary journey and get closer to GRE success!
 
 ## Website 
+### Home Page
+![image](https://github.com/alok27a/GRE-Vocab-Flash-Cards/assets/73957024/11a3cea7-d382-4e8a-ba60-fbf2a5dd045d)
 
+### Dashboard
+![image](https://github.com/alok27a/GRE-Vocab-Flash-Cards/assets/73957024/be9a3847-bdcb-453a-94e1-ea1599e7cb03)
+![image](https://github.com/alok27a/GRE-Vocab-Flash-Cards/assets/73957024/03c983d7-287a-463f-92aa-0238431f0e87)
+![image](https://github.com/alok27a/GRE-Vocab-Flash-Cards/assets/73957024/cd9e5a66-d330-406b-b06d-b3e8952eab3d)
+
+### Track your Progress
+![image](https://github.com/alok27a/GRE-Vocab-Flash-Cards/assets/73957024/8b9b97fe-8e29-4d3e-be1b-65e458956634)
 
 
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+Contributions are what makes the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/YourAmazingFeature`)
@@ -31,10 +40,6 @@ Contributions are what make the open source community such an amazing place to b
 4. Push to the Branch (`git push origin feature/YourAmazingFeature`)
 5. Open a Pull Request
 
-
-## Feedback and Support
-
-Your feedback is invaluable to us. If you have any suggestions or need support, please reach out through our [Contact Us](#) page (link to be updated).
 
 ## Acknowledgements
 
