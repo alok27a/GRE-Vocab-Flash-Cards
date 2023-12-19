@@ -12,11 +12,23 @@ import {
   useDisclosure,
   useColorModeValue,
   Stack,
+  useToast
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import ToggleTheme from '../ToggleTheme';
 import { RxReset } from "react-icons/rx";
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Text
+} from '@chakra-ui/react';
+
 
 const Links = [{ name: 'Dashboard', url: '/words' }, { name: 'Progress', url: '/progress' }]; // Update with URL
 
@@ -43,6 +55,7 @@ const NavLink = ({ name, url }) => {
 
 export default function WithAction() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   const navigate = useNavigate(); // Initialize useNavigate hook
 
   const getUserData = () => {
@@ -51,12 +64,53 @@ export default function WithAction() {
   };
 
   const user = getUserData();
-
+  const toast = useToast();
   // Logout function
   const logout = () => {
     localStorage.removeItem('user'); // Remove user data from local storage
     navigate('/'); // Redirect to login page or home page
   };
+
+  const askResetConfirmation = () => {
+    onOpen();
+  };
+
+
+
+  const resetProgress = async () => {
+    try {
+      const user = getUserData();
+
+
+      const response = await fetch(`https://gre-vocab-flash-cards-backend.vercel.app/userprogress/resetprogress/${user.userId}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${user.token}`
+        }
+      });
+
+
+      toast({
+        title: "Progress reset successfully",
+        description: "You can have a fresh start now",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      })
+
+    } catch (error) {
+      console.error('Error resetting progress:', error);
+      const errorResponse = await error.response.json(); // Get the error response body
+      console.log('Error details:', errorResponse);
+      toast({
+        title: "Error resetting progress",
+        description: errorResponse.message || "Error resetting progress",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }    
+  }
 
   return (
     <>
@@ -84,9 +138,33 @@ export default function WithAction() {
               bg={'red.400'}
               size={'md'}
               mr={4}
-              leftIcon={<RxReset />}>
+              leftIcon={<RxReset />}
+              onClick={askResetConfirmation}
+            >
               Reset Progress
             </Button>
+            {/* Modal for confirmation */}
+            <Modal isOpen={isOpen} onClose={onClose}>
+              <ModalOverlay />
+              <ModalContent>
+                <ModalHeader>Reset Progress</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                  <Text>Are you sure you want to reset your progress? This action cannot be undone.</Text>
+                </ModalBody>
+
+                <ModalFooter>
+                  <Button colorScheme="gray" mr={3} onClick={onClose}>
+                    Cancel
+                  </Button>
+                  <Button colorScheme="red" onClick={() => { resetProgress(); onClose(); }}>
+                    Yes, Reset
+                  </Button>
+                </ModalFooter>
+              </ModalContent>
+            </Modal>
+
+
             <Menu>
               <MenuButton as={Button} rounded={'full'} variant={'link'} cursor={'pointer'} minW={0}>
                 <Avatar

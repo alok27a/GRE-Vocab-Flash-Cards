@@ -14,7 +14,7 @@ const LoadingScreen = () => {
   };
 
   return (
-    <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+    <Box display="flex" justifyContent="center" alignItems="center" height="100%">
       <Lottie options={defaultOptions} height={200} width={200} />
     </Box>
   );
