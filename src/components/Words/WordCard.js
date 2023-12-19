@@ -4,9 +4,20 @@ import FlipCard from '../QuestionCard/Card';
 import { FaArrowLeft, FaArrowRight, FaCheck } from 'react-icons/fa'; // Importing icons
 import { useToast } from '@chakra-ui/react'
 import { Skeleton } from '@chakra-ui/react';
-
+import Lottie from 'react-lottie';
+import animationData from './animation-no-result.json';
 
 const WordCard = () => {
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice'
+    }
+  };
+
+
   const bg = useColorModeValue('white', 'gray.800'); // Adjusts background color
   const color = useColorModeValue('gray.800', 'white'); // Adjusts text color
 
@@ -256,7 +267,13 @@ const WordCard = () => {
 
             </Flex>
           </>
-        ) : <Text fontSize='2xl' fontWeight='bold' textAlign='center' m={4}>No words to display</Text>}
+        ) : <>
+          <Text fontSize='2xl' fontWeight='bold' textAlign='center' m={4}>No words to display</Text>
+          <Box display="flex" justifyContent="center" alignItems="center" >
+            <Lottie options={defaultOptions} height={200} width={200} />
+          </Box>
+        </>
+        }
       </VStack>
     </Box>
   );
