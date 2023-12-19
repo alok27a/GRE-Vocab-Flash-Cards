@@ -1,70 +1,59 @@
-# Getting Started with Create React App
+# GRE Flashcards - Ace Vocabulary Fast!
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to **GRE Flashcards**, your ultimate one-stop destination for mastering the vocabulary needed to excel in the GRE. Our comprehensive flashcard website features a curated collection of words handpicked from top GRE experts like Gregmat, Magoosh, and Barrons.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **Extensive Vocabulary List**: Access a wide range of words that are frequently encountered in the GRE.
+- **Expert Selection**: Each word is carefully selected by GRE gurus to ensure you study what matters the most.
+- **User-Friendly Interface**: Navigate easily through our intuitive website to make your learning process smooth and efficient.
+- **Progress Tracking**: Keep track of the words you've mastered and identify areas that need more attention.
 
-### `npm start`
+## Getting Started
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+To start using GRE Flashcards, follow these simple steps:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+1. **Visit Our Website**: Go to [GRE Flashcards Website](https://www.grevocab.alok.studio/).
+2. **Create an Account**: Sign up to track your progress and access personalized features.
+3. **Begin Learning**: Start your vocabulary journey and get closer to GRE success!
 
-### `npm test`
+## Website 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Contributing
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/YourAmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some YourAmazingFeature'`)
+4. Push to the Branch (`git push origin feature/YourAmazingFeature`)
+5. Open a Pull Request
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Feedback and Support
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Your feedback is invaluable to us. If you have any suggestions or need support, please reach out through our [Contact Us](#) page (link to be updated).
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Acknowledgements
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Special thanks to the GRE experts at Gregmat, Magoosh, and Barrons for their invaluable contributions to the GRE learning community.
 
-## Learn More
+## License
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+This project is licensed under the [MIT License](LICENSE.md).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Disclaimer
 
-### Code Splitting
+This project is not affiliated with or endorsed by the official GRE or any of the experts mentioned. It is a community-driven project aimed at aiding GRE aspirants.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+Happy Studying!
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+*GRE Flashcards Team*
+### Alok Mathur
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+[`E-Mail`](mailto:alok27a@gmail.com)
+[`LinkedIn`](https://www.linkedin.com/in/alok-mathur-5aab4534/)
