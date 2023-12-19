@@ -13,7 +13,7 @@ import {
     useToast
 } from '@chakra-ui/react';
 import { useGoogleLogin } from '@react-oauth/google';
-import { Spinner } from '@chakra-ui/react';
+import LoadingScreen from '../Loading/Loading';
 
 export default function CallToActionWithAnnotation() {
     const navigate = useNavigate(); // Initialize useNavigate hook
@@ -79,18 +79,19 @@ export default function CallToActionWithAnnotation() {
     return (
         <>
             {isLoading ? (
-                <Box textAlign="center" alignContent={"center"} alignItems={"center"} py={10}>
-                    <Spinner
-                        thickness="4px"
-                        speed="0.65s"
-                        emptyColor="gray.200"
-                        color="blue.500"
-                        size="xl"
-                    />
-                    <Text fontSize="xl" fontWeight="bold" mt={5}>
-                        Logging in...
-                    </Text>
-                </Box>
+                // <Box textAlign="center" alignContent={"center"} alignItems={"center"} py={10}>
+                //     <Spinner
+                //         thickness="4px"
+                //         speed="0.65s"
+                //         emptyColor="gray.200"
+                //         color="blue.500"
+                //         size="xl"
+                //     />
+                //     <Text fontSize="xl" fontWeight="bold" mt={5}>
+                //         Logging in...
+                //     </Text>
+                // </Box>
+                <LoadingScreen />
             ) : (
 
                 <Container maxW={'3xl'}>
